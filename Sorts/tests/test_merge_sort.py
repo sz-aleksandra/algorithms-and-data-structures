@@ -1,4 +1,4 @@
-from MergeSort.merge_sort import merge_sort
+from ..MergeSort.merge_sort import merge_sort
 
 
 def test_merge_sort(sample_list):
