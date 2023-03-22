@@ -6,6 +6,7 @@ def test_merge_sort(sample_list):
     expected_list = sorted(sample_list)
     assert merge_sort(sample_list) == expected_list
 
+
 def test_bubble_sort(sample_list):
     expected_list = sorted(sample_list)
     bubble_sort(sample_list)
