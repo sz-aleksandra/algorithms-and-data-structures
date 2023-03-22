@@ -1,7 +1,4 @@
-def change_element_positions(array, i, j):
-    temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
+from change_position import change_element_positions
 
 
 def selection_sort(words):

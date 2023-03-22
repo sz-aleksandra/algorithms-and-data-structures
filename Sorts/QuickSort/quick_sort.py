@@ -1,5 +1,5 @@
 from random import randint
-from ..SelectionSort.selection_sort import change_element_positions
+from change_position import change_element_positions
 
 
 def quick_sort(words, start, end):
