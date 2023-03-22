@@ -1,6 +1,7 @@
 from ..MergeSort.merge_sort import merge_sort
 from ..BubbleSort.bubble_sort import bubble_sort
 from ..SelectionSort.selection_sort import selection_sort
+from ..QuickSort.quick_sort import quick_sort
 import pytest
 
 
@@ -24,4 +25,10 @@ def test_bubble_sort(sample_list):
 def test_selection_sort(sample_list):
     expected_list = sorted(sample_list)
     selection_sort(sample_list)
+    assert sample_list == expected_list
+
+
+def test_quick_sort(sample_list):
+    expected_list = sorted(sample_list)
+    quick_sort(sample_list, 0, len(sample_list) - 1)
     assert sample_list == expected_list
