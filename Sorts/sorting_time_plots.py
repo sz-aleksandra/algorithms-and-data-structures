@@ -59,4 +59,4 @@ def plot_results(path, limit, title):
     figure.savefig(title, format='png')
 
 
-plot_results('pan-tadeusz-unix.txt', 10000, 'pantadeusz.png')
+plot_results('pan-tadeusz-unix.txt', 10000, 'all_sorts_pantadeusz.png')

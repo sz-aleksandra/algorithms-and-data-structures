@@ -33,5 +33,4 @@ def merge_sort(list_for_sort):
 
     list_left_half = merge_sort(list_left_half)
     list_right_half = merge_sort(list_right_half)
-
     return merge(list_left_half, list_right_half)
