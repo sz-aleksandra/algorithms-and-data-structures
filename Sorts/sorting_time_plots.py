@@ -54,9 +54,11 @@ def plot_results(path, limit, title):
     plt.plot(keys, values2, '-', label='bubble sort', markersize=3)
     plt.plot(keys, values3, '-', label='merge sort', markersize=3)
     plt.legend()
-    plt.title(label='')
+    plt.xlabel('Amount of words')
+    plt.ylabel('Time in seconds')
+    plt.title(label='Time of sorting')
     figure = plt.gcf()
     figure.savefig(title, format='png')
 
 
-plot_results('pan-tadeusz-unix.txt', 10000, './Plots/merge_pantadeusz.png')
+plot_results('pan-tadeusz-unix.txt', 10000, './Plots/bubble_pantadeusz.png')
