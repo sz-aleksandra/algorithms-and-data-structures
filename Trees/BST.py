@@ -12,6 +12,9 @@ class Node:
     def __str__(self):
         return f'{self.value}'
 
+#    def __eq__(self, other_node):
+#        return self.value == other_node.value and self.left_child == other_node.left_child and self.right_child == other_node.right_child
+
 
 class BinarySearchTree:
     def __init__(self, root=None):
@@ -74,9 +77,7 @@ class BinarySearchTree:
                 return self.find_rec(node, node.right_child, node_value)
         return parent, node
 
-    def find_biggest_node_in_subtree(self, start_parent, start_node):
-        parent = start_parent
-        node = start_node
+    def find_biggest_node_in_subtree(self, parent, node):
         while node.right_child:
             parent = node
             node = node.right_child
@@ -88,25 +89,23 @@ class BinarySearchTree:
             if node.left_child:
                 if node.right_child:
                     # ma dwoje dzieci
-                    new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)
-                    new_node.right_child = node.right_child
+                    new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)  # szukamy najwiekszego wezla w poddrzewie mniejszych zeby zastapic usuwany wezel
+                    new_node.right_child = node.right_child  # podlaczamy prawe dzieci usuwanego wezla do nowego
+                    if new_node != node.left_child:  #jesli dziecko usuwanego wezla nie mialoby zadnych prawych dzieci (jest najwiekszym elementem lewego poddrzewa) to nie trzeba podlaczac dzieci usuwanego wezla do niego
+                        new_node.left_child = node.left_child
                     if parent:
-                        if parent.left_child.value == node.value:
+                        if parent.left_child == node:
                             parent.left_child = new_node
                         else:
                             parent.right_child = new_node
                     else:
                         self.root = new_node
-                        self.root.right_child = node.right_child
-                    new_parent.left_child = None
+                    new_parent.left_child = None  # odlaczamy wezel ktorym zastepujemy usuniety wezel od jego rodzica
                 else:
                     # ma lewe dziecko
                     if parent:
-                        if parent.right_child:
-                            if parent.right_child.value == node.value:
-                                parent.right_child = node.left_child
-                            else:
-                                parent.left_child = node.left_child
+                        if parent.right_child == node:
+                            parent.right_child = node.left_child
                         else:
                             parent.left_child = node.left_child
                     else:
@@ -115,19 +114,16 @@ class BinarySearchTree:
                 if node.right_child:
                     # ma prawe dziecko
                     if parent:
-                        if parent.left_child:
-                            if parent.left_child.value == node.value:
-                                parent.left_child = node.right_child
-                            else:
-                                parent.right_child = node.right_child
+                        if parent.left_child == node:
+                            parent.left_child = node.right_child
                         else:
-                            parent.left_child = node.left_child
+                            parent.right_child = node.right_child
                     else:
                         self.root = node.right_child
                 else:
                     # nie ma dzieci
                     if parent:
-                        if parent.left_child.value == node.value:
+                        if parent.left_child == node:
                             parent.left_child = None
                         else:
                             parent.right_child = None
@@ -146,8 +142,12 @@ for i in range(len(digits)):
 print(tree.root)
 print(tree.find_rec(None, tree.root, 4))
 print(tree.find_rec(None, tree.root, 10))
+#print(tree.find_biggest_node_in_subtree(tree.root.right_child, tree.root.right_child.left_child))
+#tree.delete_node(2)
 #tree.delete_node(7)
 #tree.delete_node(8)
 #tree.delete_node(4)
 #tree.delete_node(6)
 #tree.delete_node(0)
+#print(tree.root)
+
