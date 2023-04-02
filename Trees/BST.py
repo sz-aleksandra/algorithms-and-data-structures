@@ -37,6 +37,21 @@ class BinarySearchTree:
                     else:
                         node = node.right_child
 
+    def insert_rec(self, node_value, node):
+        if not node:
+            self.root = Node(node_value)
+        else:
+            if node_value < node.value:
+                if node.left_child:
+                    self.insert_rec(node_value, node.left_child)
+                else:
+                    node.left_child = Node(node_value)
+            elif node_value > node.value:
+                if node.right_child:
+                    self.insert_rec(node_value, node.right_child)
+                else:
+                    node.right_child = Node(node_value)
+
     def find_node(self, node_value):
         parent = None
         node = self.root
@@ -118,13 +133,13 @@ class BinarySearchTree:
 tree = BinarySearchTree()
 
 for i in range(len(digits)):
-    tree.insert_node(digits[i])
+    tree.insert_rec(digits[i], tree.root)
 
 print(tree.root)
-print(tree.find_node(4))
-print(tree.find_node(10))
-tree.delete_node(7)
-tree.delete_node(8)
-tree.delete_node(4)
-tree.delete_node(6)
-tree.delete_node(0)
+#print(tree.find_node(4))
+#print(tree.find_node(10))
+#tree.delete_node(7)
+#tree.delete_node(8)
+#tree.delete_node(4)
+#tree.delete_node(6)
+#tree.delete_node(0)
