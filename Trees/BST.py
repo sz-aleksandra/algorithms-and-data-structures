@@ -66,6 +66,14 @@ class BinarySearchTree:
                 return parent, node
         return parent, node
 
+    def find_rec(self, parent, node, node_value):
+        if node:
+            if node_value < node.value:
+                return self.find_rec(node, node.left_child, node_value)
+            elif node_value > node.value:
+                return self.find_rec(node, node.right_child, node_value)
+        return parent, node
+
     def find_biggest_node_in_subtree(self, start_parent, start_node):
         parent = start_parent
         node = start_node
@@ -136,8 +144,8 @@ for i in range(len(digits)):
     tree.insert_rec(digits[i], tree.root)
 
 print(tree.root)
-#print(tree.find_node(4))
-#print(tree.find_node(10))
+print(tree.find_rec(None, tree.root, 4))
+print(tree.find_rec(None, tree.root, 10))
 #tree.delete_node(7)
 #tree.delete_node(8)
 #tree.delete_node(4)
