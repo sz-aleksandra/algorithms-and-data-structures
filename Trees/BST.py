@@ -130,8 +130,24 @@ class BinarySearchTree:
                     else:
                         self.root = None
 
-    def print_tree():
-        pass
+    def find_height(self, node):
+        if not node:
+            return 0
+        else:
+            left_height = self.find_height(node.left_child)
+            right_height = self.find_height(node.right_child)
+            return max(left_height, right_height) + 1
+
+    def print_tree(self, left, level, node):
+        if node:
+            self.print_horizontally(0, level + 1, node.right_child)
+            if node == self.root:
+                print(F"{'  ' * level}*{node}*")
+            elif left:
+                print(F"{'  ' * level}\*{node}*")
+            else:
+                print(F"{'  ' * level}/*{node}*")
+            self.print_horizontally(1, level + 1, node.left_child)
 
 
 tree = BinarySearchTree()
@@ -139,9 +155,10 @@ tree = BinarySearchTree()
 for i in range(len(digits)):
     tree.insert_rec(digits[i], tree.root)
 
-print(tree.root)
-print(tree.find_rec(None, tree.root, 4))
-print(tree.find_rec(None, tree.root, 10))
+#print(tree.root)
+#print(tree.find_rec(None, tree.root, 4))
+#print(tree.find_rec(None, tree.root, 10))
+tree.print_horizontally(0, 0, tree.root)
 #print(tree.find_biggest_node_in_subtree(tree.root.right_child, tree.root.right_child.left_child))
 #tree.delete_node(2)
 #tree.delete_node(7)
@@ -149,5 +166,3 @@ print(tree.find_rec(None, tree.root, 10))
 #tree.delete_node(4)
 #tree.delete_node(6)
 #tree.delete_node(0)
-#print(tree.root)
-
