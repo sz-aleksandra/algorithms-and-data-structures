@@ -1,4 +1,3 @@
-
 class Node:
     def __init__(self, value):
         self.value = value
@@ -86,10 +85,10 @@ class BinarySearchTree:
         if node:
             if node.left_child:
                 if node.right_child:
-                    # ma dwoje dzieci
-                    new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)  # szukamy najwiekszego wezla w poddrzewie mniejszych zeby zastapic usuwany wezel
-                    new_node.right_child = node.right_child  # podlaczamy prawe dzieci usuwanego wezla do nowego
-                    if new_node != node.left_child:  # jesli dziecko usuwanego wezla nie mialoby zadnych prawych dzieci (jest najwiekszym elementem lewego poddrzewa) to nie trzeba podlaczac dzieci usuwanego wezla do niego
+                    # has two children
+                    new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)
+                    new_node.right_child = node.right_child
+                    if new_node != node.left_child:
                         new_node.left_child = node.left_child
                     if parent:
                         if parent.left_child == node:
@@ -98,9 +97,9 @@ class BinarySearchTree:
                             parent.right_child = new_node
                     else:
                         self.root = new_node
-                    new_parent.left_child = None  # odlaczamy wezel ktorym zastepujemy usuniety wezel od jego rodzica
+                    new_parent.left_child = None
                 else:
-                    # ma lewe dziecko
+                    # has left child
                     if parent:
                         if parent.right_child == node:
                             parent.right_child = node.left_child
@@ -110,7 +109,7 @@ class BinarySearchTree:
                         self.root = node.left_child
             else:
                 if node.right_child:
-                    # ma prawe dziecko
+                    # has right child
                     if parent:
                         if parent.left_child == node:
                             parent.left_child = node.right_child
@@ -119,7 +118,7 @@ class BinarySearchTree:
                     else:
                         self.root = node.right_child
                 else:
-                    # nie ma dzieci
+                    # does not have children
                     if parent:
                         if parent.left_child == node:
                             parent.left_child = None
