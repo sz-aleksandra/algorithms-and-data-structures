@@ -37,14 +37,13 @@ class BinarySearchTree:
                     self.insert_rec(node_value, node.right_child)
                 else:
                     node.right_child = Node(node_value)
-            if node.right_child:
-                if node.left_child:
-                    node.height = max(
-                        node.left_child.height,
-                        node.right_child.height
-                        ) + 1
-                else:
-                    node.height = node.right_child.height + 1
+            if node.right_child and node.left_child:
+                node.height = max(
+                    node.left_child.height,
+                    node.right_child.height
+                    ) + 1
+            elif node.right_child:
+                node.height = node.right_child.height + 1
             elif node.left_child:
                 node.height = node.left_child.height + 1
 
