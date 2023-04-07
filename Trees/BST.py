@@ -1,7 +1,3 @@
-# pamietac zeby zrobic tez dal posortowanej listy
-
-digits = [0, 2, 1, 6, 5, 8, 4, 7, 9, 3]
-
 
 class Node:
     def __init__(self, value):
@@ -18,31 +14,14 @@ class BinarySearchTree:
     def __init__(self, root=None):
         self.root = root
 
-    def insert_node(self, node_value):
-        if not self.root:
-            self.root = Node(node_value)
-        else:
-            success = False
-            node = self.root
-            while not success:
-                if node_value < node.value:
-                    if not node.left_child:
-                        node.left_child = Node(node_value)
-                        success = True
-                    else:
-                        node = node.left_child
-                elif node_value > node.value:
-                    if not node.right_child:
-                        node.right_child = Node(node_value)
-                        success = True
-                    else:
-                        node = node.right_child
-
     def get_node_height(self, node):
         if not node:
             return 0
         else:
-            return max(self.get_node_height(node.left_child), self.get_node_height(node.right_child)) + 1
+            return max(
+                self.get_node_height(node.left_child),
+                self.get_node_height(node.right_child)
+                ) + 1
 
     def insert_rec(self, node_value, node):
         if not node:
@@ -60,7 +39,10 @@ class BinarySearchTree:
                     node.right_child = Node(node_value)
             if node.right_child:
                 if node.left_child:
-                    node.height = max(node.left_child.height, node.right_child.height) + 1
+                    node.height = max(
+                        node.left_child.height,
+                        node.right_child.height
+                        ) + 1
                 else:
                     node.height = node.right_child.height + 1
             elif node.left_child:
@@ -108,7 +90,7 @@ class BinarySearchTree:
                     # ma dwoje dzieci
                     new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)  # szukamy najwiekszego wezla w poddrzewie mniejszych zeby zastapic usuwany wezel
                     new_node.right_child = node.right_child  # podlaczamy prawe dzieci usuwanego wezla do nowego
-                    if new_node != node.left_child:  #jesli dziecko usuwanego wezla nie mialoby zadnych prawych dzieci (jest najwiekszym elementem lewego poddrzewa) to nie trzeba podlaczac dzieci usuwanego wezla do niego
+                    if new_node != node.left_child:  # jesli dziecko usuwanego wezla nie mialoby zadnych prawych dzieci (jest najwiekszym elementem lewego poddrzewa) to nie trzeba podlaczac dzieci usuwanego wezla do niego
                         new_node.left_child = node.left_child
                     if parent:
                         if parent.left_child == node:
@@ -166,22 +148,3 @@ class BinarySearchTree:
             else:
                 print(F"{'  ' * level}/*{node}*")
             self.print_horizontally(1, level + 1, node.left_child)
-
-
-tree = BinarySearchTree()
-
-for i in range(len(digits)):
-    tree.insert_rec(digits[i], tree.root)
-
-
-#print(tree.root)
-#print(tree.find_rec(None, tree.root, 4))
-#print(tree.find_rec(None, tree.root, 10))
-#print(tree.find_biggest_node_in_subtree(tree.root.right_child, tree.root.right_child.left_child))
-tree.delete_node(2)
-tree.print_horizontally(0, 0, tree.root)
-tree.delete_node(7)
-#tree.delete_node(8)
-#tree.delete_node(4)
-#tree.delete_node(6)
-#tree.delete_node(0)
