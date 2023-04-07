@@ -98,6 +98,12 @@ class BinarySearchTree:
             node = node.right_child
         return parent, node
 
+    def change_node_heights_after_deleting(self, node):
+        if node:
+            self.change_node_heights_after_deleting(node.left_child)
+            self.change_node_heights_after_deleting(node.right_child)
+            node.height = self.get_node_height(node)
+
     def delete_node(self, node_value):
         parent, node = self.find_node(node_value)
         if node:
@@ -144,6 +150,7 @@ class BinarySearchTree:
                             parent.right_child = None
                     else:
                         self.root = None
+            self.change_node_heights_after_deleting(self.root)
 
     def find_height(self, node):
         if not node:
@@ -173,10 +180,10 @@ for i in range(len(digits)):
 #print(tree.root)
 #print(tree.find_rec(None, tree.root, 4))
 #print(tree.find_rec(None, tree.root, 10))
-tree.print_horizontally(0, 0, tree.root)
 #print(tree.find_biggest_node_in_subtree(tree.root.right_child, tree.root.right_child.left_child))
-#tree.delete_node(2)
-#tree.delete_node(7)
+tree.delete_node(2)
+tree.print_horizontally(0, 0, tree.root)
+tree.delete_node(7)
 #tree.delete_node(8)
 #tree.delete_node(4)
 #tree.delete_node(6)
