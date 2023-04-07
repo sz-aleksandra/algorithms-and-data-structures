@@ -108,17 +108,3 @@ class AVLTree(BinarySearchTree):
         left_node.height = 1 + max(self._get_height(left_node.left_child), self._get_height(left_node.right_child))
 
         return left_node
-
-
-tree = AVLTree()
-
-digits = range(0, 10)
-
-for digit in digits:
-    tree.insert_node(digit)
-
-tree.print_horizontally(0, 0, tree.root)
-tree.delete_node(3)
-tree.delete_node(1)
-tree.delete_node(7)
-tree.print_horizontally(0, 0, tree.root)
