@@ -48,20 +48,27 @@ class BinarySearchTree:
         else:
             return max(self.get_node_height(node.left_child), self.get_node_height(node.right_child)) + 1
 
-    def insert_rec(self, node_value, node,):
+    def insert_rec(self, node_value, node):
         if not node:
             self.root = Node(node_value)
-        elif node_value < node.value:
-            if node.left_child:
-                self.insert_rec(node_value, node.left_child)
-            else:
-                node.left_child = Node(node_value)
-        elif node_value > node.value:
+        else:
+            if node_value < node.value:
+                if node.left_child:
+                    self.insert_rec(node_value, node.left_child)
+                else:
+                    node.left_child = Node(node_value)
+            elif node_value > node.value:
+                if node.right_child:
+                    self.insert_rec(node_value, node.right_child)
+                else:
+                    node.right_child = Node(node_value)
             if node.right_child:
-                self.insert_rec(node_value, node.right_child)
-            else:
-                node.right_child = Node(node_value)
-            node.height = self.get_node_height(node)
+                if node.left_child:
+                    node.height = max(node.left_child.height, node.right_child.height) + 1
+                else:
+                    node.height = node.right_child.height + 1
+            elif node.left_child:
+                node.height = node.left_child.height + 1
 
     def find_node(self, node_value):
         parent = None
