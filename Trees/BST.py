@@ -6,11 +6,13 @@ digits = [0, 2, 1, 6, 5, 8, 4, 7, 9, 3]
 class Node:
     def __init__(self, value):
         self.value = value
+        self.height = 1
         self.left_child = None
         self.right_child = None
 
     def __str__(self):
         return f'{self.value}'
+
 
 #    def __eq__(self, other_node):
 #        return self.value == other_node.value and self.left_child == other_node.left_child and self.right_child == other_node.right_child
@@ -40,20 +42,26 @@ class BinarySearchTree:
                     else:
                         node = node.right_child
 
-    def insert_rec(self, node_value, node):
+    def get_node_height(self, node):
+        if not node:
+            return 0
+        else:
+            return max(self.get_node_height(node.left_child), self.get_node_height(node.right_child)) + 1
+
+    def insert_rec(self, node_value, node,):
         if not node:
             self.root = Node(node_value)
-        else:
-            if node_value < node.value:
-                if node.left_child:
-                    self.insert_rec(node_value, node.left_child)
-                else:
-                    node.left_child = Node(node_value)
-            elif node_value > node.value:
-                if node.right_child:
-                    self.insert_rec(node_value, node.right_child)
-                else:
-                    node.right_child = Node(node_value)
+        elif node_value < node.value:
+            if node.left_child:
+                self.insert_rec(node_value, node.left_child)
+            else:
+                node.left_child = Node(node_value)
+        elif node_value > node.value:
+            if node.right_child:
+                self.insert_rec(node_value, node.right_child)
+            else:
+                node.right_child = Node(node_value)
+            node.height = self.get_node_height(node)
 
     def find_node(self, node_value):
         parent = None
@@ -138,7 +146,7 @@ class BinarySearchTree:
             right_height = self.find_height(node.right_child)
             return max(left_height, right_height) + 1
 
-    def print_tree(self, left, level, node):
+    def print_horizontally(self, left, level, node):
         if node:
             self.print_horizontally(0, level + 1, node.right_child)
             if node == self.root:
