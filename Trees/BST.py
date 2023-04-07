@@ -127,7 +127,7 @@ class BinarySearchTree:
                             parent.right_child = None
                     else:
                         self.root = None
-            self.change_node_heights_after_deleting(self.root)
+#            self.change_node_heights_after_deleting(self.root)
 
     def find_height(self, node):
         if not node:
