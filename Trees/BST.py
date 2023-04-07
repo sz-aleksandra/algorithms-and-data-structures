@@ -9,14 +9,9 @@ class Node:
         self.height = 1
         self.left_child = None
         self.right_child = None
-        self.height = 1
 
     def __str__(self):
         return f'{self.value}'
-
-
-#    def __eq__(self, other_node):
-#        return self.value == other_node.value and self.left_child == other_node.left_child and self.right_child == other_node.right_child
 
 
 class BinarySearchTree:
@@ -70,18 +65,6 @@ class BinarySearchTree:
                     node.height = node.right_child.height + 1
             elif node.left_child:
                 node.height = node.left_child.height + 1
-
-            if node.left_child and node.right_child:
-                node.height = 1 + max(node.left_child.height, node.right_child.height)
-            elif node.left_child:
-                node.height = 1 + node.left_child.height
-            elif node.right_child:
-                node.height = 1 + node.right_child.height
-            else:
-                node.height = 1
-
-
-
 
     def find_node(self, node_value):
         parent = None

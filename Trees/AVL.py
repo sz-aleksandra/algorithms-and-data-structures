@@ -1,28 +1,26 @@
-from BST import Node, BinarySearchTree
-
-
-class Node:
-    def __init__(self, value = None):
-        self.value = value
-        self.left_child = None
-        self.right_child = None
-        self.height = 1
+from BST import BinarySearchTree
 
 
 class AVLTree(BinarySearchTree):
     def insert_rec(self, node_value, node):
         super().insert_rec(node_value, node)
-        self.rebalance(node)
+        self.insert_rebalance(node)
 
-    def rebalanace(self, node):
-        pass
+    def insert_rebalanace(self, node):
+        balance = self._get_balance(node)
 
-
+        if balance > 1 and self._get_balance(node.left_child) >= 0:
+            return self._rotate_left
 
     def _get_balance(self, node):
         if not node:
             return 0
 
+        return self._get_height(node.left_child) - self._get_height(node.right_child)
+
+    def _get_height(self, node):
+        if not node:
+            return 0
         return node.height
 
     def _rotate_left(self, node):
