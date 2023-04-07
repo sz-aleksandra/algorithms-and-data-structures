@@ -8,6 +8,7 @@ class Node:
         self.value = value
         self.left_child = None
         self.right_child = None
+        self.height = 1
 
     def __str__(self):
         return f'{self.value}'
@@ -54,6 +55,18 @@ class BinarySearchTree:
                     self.insert_rec(node_value, node.right_child)
                 else:
                     node.right_child = Node(node_value)
+
+            if node.left_child and node.right_child:
+                node.height = 1 + max(node.left_child.height, node.right_child.height)
+            elif node.left_child:
+                node.height = 1 + node.left_child.height
+            elif node.right_child:
+                node.height = 1 + node.right_child.height
+            else:
+                node.height = 1
+
+
+
 
     def find_node(self, node_value):
         parent = None
@@ -138,7 +151,7 @@ class BinarySearchTree:
             right_height = self.find_height(node.right_child)
             return max(left_height, right_height) + 1
 
-    def print_tree(self, left, level, node):
+    def print_horizontally(self, left, level, node):
         if node:
             self.print_horizontally(0, level + 1, node.right_child)
             if node == self.root:
@@ -154,6 +167,7 @@ tree = BinarySearchTree()
 
 for i in range(len(digits)):
     tree.insert_rec(digits[i], tree.root)
+
 
 #print(tree.root)
 #print(tree.find_rec(None, tree.root, 4))
