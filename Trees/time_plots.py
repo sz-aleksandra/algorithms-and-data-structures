@@ -19,7 +19,7 @@ def measure_bst_operations_time():
     bst_finding_times = {}
     bst_deleting_times = {}
     for n in n_range:
-        sys.setrecursionlimit(n)
+        sys.setrecursionlimit(3*n)
 
         gc_old = gc.isenabled()
         gc.disable()
@@ -113,4 +113,4 @@ def plot_creation(title, operation):
 
 plot_creation('creation_time.png', 'creation')
 plot_creation('finding_time.png', 'finding')
-plot_creation('deletion_time.py', 'deletion')
+plot_creation('deletion_time.png', 'deletion')
