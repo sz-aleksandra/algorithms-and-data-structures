@@ -13,17 +13,16 @@ class BinarySearchTree:
     def insert_rec(self, node_value, node):
         if not node:
             self.root = Node(node_value)
-        else:
-            if node_value < node.value:
-                if node.left_child:
-                    self.insert_rec(node_value, node.left_child)
-                else:
-                    node.left_child = Node(node_value)
-            elif node_value > node.value:
-                if node.right_child:
-                    self.insert_rec(node_value, node.right_child)
-                else:
-                    node.right_child = Node(node_value)
+        elif node_value < node.value:
+            if node.left_child:
+                self.insert_rec(node_value, node.left_child)
+            else:
+                node.left_child = Node(node_value)
+        elif node_value > node.value:
+            if node.right_child:
+                self.insert_rec(node_value, node.right_child)
+            else:
+                node.right_child = Node(node_value)
 
     def find_rec(self, parent, node, node_value):
         if node:
@@ -46,17 +45,17 @@ class BinarySearchTree:
                 if node.right_child:
                     # has two children
                     new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)
-                    new_node.right_child = node.right_child
-                    if new_node != node.left_child:
-                        new_node.left_child = node.left_child
                     if parent:
                         if parent.left_child == node:
-                            parent.left_child = new_node
+                            parent.left_child.value = new_node.value
                         else:
-                            parent.right_child = new_node
+                            parent.right_child.value = new_node.value
                     else:
-                        self.root = new_node
-                    new_parent.left_child = None
+                        self.root.value = new_node.value
+                    if node != new_parent:
+                        new_parent.left_child = None
+                    else:
+                        node.left_child = new_node.left_child
                 else:
                     # has left child
                     if parent:
