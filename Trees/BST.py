@@ -32,58 +32,36 @@ class BinarySearchTree:
                 return self.find_rec(node, node.right_child, node_value)
         return parent, node
 
-    def find_biggest_node_in_subtree(self, parent, node):
-        while node.right_child:
-            parent = node
-            node = node.right_child
-        return parent, node
+    def _get_node_with_min_value(self, node):
+        if not node or not node.left_child:
+            return node
+        return self._get_node_with_min_value(node.left_child)
 
     def delete_node(self, node_value):
-        parent, node = self.find_rec(None, self.root, node_value)
-        if node:
-            if node.left_child:
-                if node.right_child:
-                    # has two children
-                    new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)
-                    if parent:
-                        if parent.left_child == node:
-                            parent.left_child.value = new_node.value
-                        else:
-                            parent.right_child.value = new_node.value
-                    else:
-                        self.root.value = new_node.value
-                    if node != new_parent:
-                        new_parent.left_child = None
-                    else:
-                        node.left_child = new_node.left_child
-                else:
-                    # has left child
-                    if parent:
-                        if parent.right_child == node:
-                            parent.right_child = node.left_child
-                        else:
-                            parent.left_child = node.left_child
-                    else:
-                        self.root = node.left_child
-            else:
-                if node.right_child:
-                    # has right child
-                    if parent:
-                        if parent.left_child == node:
-                            parent.left_child = node.right_child
-                        else:
-                            parent.right_child = node.right_child
-                    else:
-                        self.root = node.right_child
-                else:
-                    # does not have children
-                    if parent:
-                        if parent.left_child == node:
-                            parent.left_child = None
-                        else:
-                            parent.right_child = None
-                    else:
-                        self.root = None
+        self.root = self._delete_node(self.root, node_value)
+
+    def _delete_node(self, node, node_value):
+        if not node:
+            return node
+        elif node_value < node.value:
+            node.left_child = self._delete_node(node.left_child, node_value)
+        elif node_value > node.value:
+            node.right_child = self._delete_node(node.right_child, node_value)
+        else:
+            # in this case node has one child or none
+            if not node.left_child:
+                temp_node = node.right_child
+                node = None
+                return temp_node
+            elif not node.right_child:
+                temp_node = node.left_child
+                node = None
+                return temp_node
+            # in this case node has both children
+            temp_node = self._get_node_with_min_value(node.right_child)
+            node.value = temp_node.value
+            node.right_child = self._delete_node(node.right_child, temp_node.value)
+        return node
 
     def print_horizontally(self, left, level, node):
         if node:
