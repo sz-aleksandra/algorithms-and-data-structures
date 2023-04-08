@@ -19,7 +19,7 @@ def measure_bst_operations_time():
     bst_finding_times = {}
     bst_deleting_times = {}
     for n in n_range:
-        sys.setrecursionlimit(3*n)
+        sys.setrecursionlimit(n)
 
         gc_old = gc.isenabled()
         gc.disable()
