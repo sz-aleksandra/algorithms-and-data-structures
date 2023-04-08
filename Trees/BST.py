@@ -81,7 +81,7 @@ class BinarySearchTree:
             node.height = self.get_node_height(node)
 
     def delete_node(self, node_value):
-        parent, node = self.find_node(node_value)
+        parent, node = self.find_rec(None, self.root, node_value)
         if node:
             if node.left_child:
                 if node.right_child:
