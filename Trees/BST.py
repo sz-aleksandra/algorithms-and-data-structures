@@ -5,22 +5,10 @@ class Node:
         self.left_child = None
         self.right_child = None
 
-    def __str__(self):
-        return f'{self.value}'
-
 
 class BinarySearchTree:
     def __init__(self, root=None):
         self.root = root
-
-    def get_node_height(self, node):
-        if not node:
-            return 0
-        else:
-            return max(
-                self.get_node_height(node.left_child),
-                self.get_node_height(node.right_child)
-                ) + 1
 
     def insert_rec(self, node_value, node):
         if not node:
@@ -36,29 +24,6 @@ class BinarySearchTree:
                     self.insert_rec(node_value, node.right_child)
                 else:
                     node.right_child = Node(node_value)
-            if node.right_child and node.left_child:
-                node.height = max(
-                    node.left_child.height,
-                    node.right_child.height
-                    ) + 1
-            elif node.right_child:
-                node.height = node.right_child.height + 1
-            elif node.left_child:
-                node.height = node.left_child.height + 1
-
-    def find_node(self, node_value):
-        parent = None
-        node = self.root
-        while node:
-            if node_value < node.value:
-                parent = node
-                node = node.left_child
-            elif node_value > node.value:
-                parent = node
-                node = node.right_child
-            else:
-                return parent, node
-        return parent, node
 
     def find_rec(self, parent, node, node_value):
         if node:
@@ -74,14 +39,8 @@ class BinarySearchTree:
             node = node.right_child
         return parent, node
 
-    def change_node_heights_after_deleting(self, node):
-        if node:
-            self.change_node_heights_after_deleting(node.left_child)
-            self.change_node_heights_after_deleting(node.right_child)
-            node.height = self.get_node_height(node)
-
     def delete_node(self, node_value):
-        parent, node = self.find_node(node_value)
+        parent, node = self.find_rec(None, self.root, node_value)
         if node:
             if node.left_child:
                 if node.right_child:
@@ -126,23 +85,14 @@ class BinarySearchTree:
                             parent.right_child = None
                     else:
                         self.root = None
-#            self.change_node_heights_after_deleting(self.root)
-
-    def find_height(self, node):
-        if not node:
-            return 0
-        else:
-            left_height = self.find_height(node.left_child)
-            right_height = self.find_height(node.right_child)
-            return max(left_height, right_height) + 1
 
     def print_horizontally(self, left, level, node):
         if node:
             self.print_horizontally(0, level + 1, node.right_child)
             if node == self.root:
-                print(F"{'  ' * level}*{node}*")
+                print(f"{'  ' * level}*{node.value}*")
             elif left:
-                print(F"{'  ' * level}\*{node}*")
+                print(f"{'  ' * level}\\*{node.value}*")
             else:
-                print(F"{'  ' * level}/*{node}*")
+                print(f"{'  ' * level}/*{node.value}*")
             self.print_horizontally(1, level + 1, node.left_child)
