@@ -1,5 +1,4 @@
-import pytest
-from BST import Node, BinarySearchTree
+from ..BST import Node, BinarySearchTree
 
 # change_node_hegiht_after_deleting is not tested but its a part of delete_node test
 # print_horizontally is not tested automaticly, but manually

@@ -25,12 +25,15 @@ class BinarySearchTree:
                 else:
                     node.right_child = Node(node_value)
 
-    def find_rec(self, parent, node, node_value):
+    def find_rec(self, parent, node, node_value, depth=0, max_depth=None):
+        if max_depth is not None and depth >= max_depth:
+            return None
+
         if node:
             if node_value < node.value:
-                return self.find_rec(node, node.left_child, node_value)
+                return self.find_rec(node, node.left_child, node_value, depth=depth+1, max_depth=max_depth)
             elif node_value > node.value:
-                return self.find_rec(node, node.right_child, node_value)
+                return self.find_rec(node, node.right_child, node_value, depth=depth+1, max_depth=max_depth)
         return parent, node
 
     def find_biggest_node_in_subtree(self, parent, node):
@@ -40,7 +43,7 @@ class BinarySearchTree:
         return parent, node
 
     def delete_node(self, node_value):
-        parent, node = self.find_rec(None, self.root, node_value)
+        parent, node = self.find_rec(None, self.root, node_value, max_depth=1000)
         if node:
             if node.left_child:
                 if node.right_child:

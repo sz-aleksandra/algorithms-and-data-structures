@@ -33,7 +33,7 @@ def measure_bst_operations_time():
 
         start_finding_time = time.process_time()
         for digit in input_list:
-            bst_tree.find_rec(None, bst_tree.root, digit)
+            _, _ = bst_tree.find_rec(None, bst_tree.root, digit, max_depth=100)
         finish_finding_time = time.process_time()
         bst_finding_times[n] = finish_finding_time - start_finding_time
 
@@ -112,5 +112,3 @@ def plot_creation(title, operation):
 
 
 plot_creation('creation_time.png', 'creation')
-plot_creation('finding_time.png', 'finding')
-plot_creation('deletion_time.png', 'deletion')
