@@ -10,19 +10,25 @@ class BinarySearchTree:
     def __init__(self, root=None):
         self.root = root
 
-    def insert_rec(self, node_value, node):
-        if not node:
-            self.root = Node(node_value)
-        elif node_value < node.value:
-            if node.left_child:
-                self.insert_rec(node_value, node.left_child)
+    def insert_ite(self, node_value):
+        parent = None
+        node = self.root
+        new = Node(node_value)
+        while node is not None:
+            if new.value < node.value:
+                parent = node
+                node = node.left_child
             else:
-                node.left_child = Node(node_value)
-        elif node_value > node.value:
-            if node.right_child:
-                self.insert_rec(node_value, node.right_child)
-            else:
-                node.right_child = Node(node_value)
+                # new.value >= node.value
+                parent = node
+                node = node.right_child
+        if parent is None:
+            # there is no root
+            self.root = new
+        elif new.value < parent.value:
+            parent.left_child = new
+        elif new.value > parent.value:
+            parent.right_child = new
 
     def find_rec(self, parent, node, node_value):
         if node:
@@ -31,6 +37,20 @@ class BinarySearchTree:
             elif node_value > node.value:
                 return self.find_rec(node, node.right_child, node_value)
         return parent, node
+
+    def find_ite(self, node_value):
+        parent = None
+        node = self.root
+        while node:
+            if node_value < node.value:
+                parent = node
+                node = node.left_child
+            elif node_value > node.value:
+                parent = node
+                node = node.right_child
+            elif node_value == node.value:
+                return parent, node
+        return None, None
 
     def _get_node_with_min_value(self, node):
         if not node or not node.left_child:

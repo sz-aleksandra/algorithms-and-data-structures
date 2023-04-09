@@ -11,6 +11,10 @@ def random_list_generator():
     return [randint(1, 30000) for _ in range(10000)]
 
 
+def ascending_order_list_generator():
+    return [i + 1 for i in range(10000)]
+
+
 n_range = range(1000, 11000, 1000)
 
 
@@ -23,17 +27,18 @@ def measure_bst_operations_time():
 
         gc_old = gc.isenabled()
         gc.disable()
-        input_list = random_list_generator()[:n]
+#        input_list = random_list_generator()[:n]
+        input_list = ascending_order_list_generator()
         bst_tree = BinarySearchTree()
         start_creation_time = time.process_time()
         for digit in input_list:
-            bst_tree.insert_rec(digit, bst_tree.root)
+            bst_tree.insert_ite(digit)
         finish_creation_time = time.process_time()
         bst_creation_times[n] = finish_creation_time - start_creation_time
 
         start_finding_time = time.process_time()
         for digit in input_list:
-            bst_tree.find_rec(None, bst_tree.root, digit)
+            bst_tree.find_ite(digit)
         finish_finding_time = time.process_time()
         bst_finding_times[n] = finish_finding_time - start_finding_time
 
@@ -60,7 +65,8 @@ def measure_avl_operations_time():
 
         gc_old = gc.isenabled()
         gc.disable()
-        input_list = random_list_generator()[:n]
+#        input_list = random_list_generator()[:n]
+        input_list = ascending_order_list_generator()
         avl_tree = AVLTree()
         start_creation_time = time.process_time()
         for digit in input_list:
