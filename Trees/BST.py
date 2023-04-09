@@ -10,20 +10,25 @@ class BinarySearchTree:
     def __init__(self, root=None):
         self.root = root
 
-    def insert_rec(self, node_value, node):
-        if not node:
-            self.root = Node(node_value)
-        else:
-            if node_value < node.value:
-                if node.left_child:
-                    self.insert_rec(node_value, node.left_child)
-                else:
-                    node.left_child = Node(node_value)
-            elif node_value > node.value:
-                if node.right_child:
-                    self.insert_rec(node_value, node.right_child)
-                else:
-                    node.right_child = Node(node_value)
+    def insert_ite(self, node_value):
+        parent = None
+        node = self.root
+        new = Node(node_value)
+        while node is not None:
+            if new.value < node.value:
+                parent = node
+                node = node.left_child
+            else:
+                # new.value >= node.value
+                parent = node
+                node = node.right_child
+        if parent is None:
+            # there is no root
+            self.root = new
+        elif new.value < parent.value:
+            parent.left_child = new
+        elif new.value > parent.value:
+            parent.right_child = new
 
     def find_rec(self, parent, node, node_value, depth=0, max_depth=None):
         if max_depth is not None and depth >= max_depth:
@@ -36,58 +41,50 @@ class BinarySearchTree:
                 return self.find_rec(node, node.right_child, node_value, depth=depth+1, max_depth=max_depth)
         return parent, node
 
-    def find_biggest_node_in_subtree(self, parent, node):
-        while node.right_child:
-            parent = node
-            node = node.right_child
-        return parent, node
+    def find_ite(self, node_value):
+        parent = None
+        node = self.root
+        while node:
+            if node_value < node.value:
+                parent = node
+                node = node.left_child
+            elif node_value > node.value:
+                parent = node
+                node = node.right_child
+            elif node_value == node.value:
+                return parent, node
+        return None, None
+
+    def _get_node_with_min_value(self, node):
+        if not node or not node.left_child:
+            return node
+        return self._get_node_with_min_value(node.left_child)
 
     def delete_node(self, node_value):
-        parent, node = self.find_rec(None, self.root, node_value, max_depth=1000)
-        if node:
-            if node.left_child:
-                if node.right_child:
-                    # has two children
-                    new_parent, new_node = self.find_biggest_node_in_subtree(node, node.left_child)
-                    new_node.right_child = node.right_child
-                    if new_node != node.left_child:
-                        new_node.left_child = node.left_child
-                    if parent:
-                        if parent.left_child == node:
-                            parent.left_child = new_node
-                        else:
-                            parent.right_child = new_node
-                    else:
-                        self.root = new_node
-                    new_parent.left_child = None
-                else:
-                    # has left child
-                    if parent:
-                        if parent.right_child == node:
-                            parent.right_child = node.left_child
-                        else:
-                            parent.left_child = node.left_child
-                    else:
-                        self.root = node.left_child
-            else:
-                if node.right_child:
-                    # has right child
-                    if parent:
-                        if parent.left_child == node:
-                            parent.left_child = node.right_child
-                        else:
-                            parent.right_child = node.right_child
-                    else:
-                        self.root = node.right_child
-                else:
-                    # does not have children
-                    if parent:
-                        if parent.left_child == node:
-                            parent.left_child = None
-                        else:
-                            parent.right_child = None
-                    else:
-                        self.root = None
+        self.root = self._delete_node(self.root, node_value)
+
+    def _delete_node(self, node, node_value):
+        if not node:
+            return node
+        elif node_value < node.value:
+            node.left_child = self._delete_node(node.left_child, node_value)
+        elif node_value > node.value:
+            node.right_child = self._delete_node(node.right_child, node_value)
+        else:
+            # in this case node has one child or none
+            if not node.left_child:
+                temp_node = node.right_child
+                node = None
+                return temp_node
+            elif not node.right_child:
+                temp_node = node.left_child
+                node = None
+                return temp_node
+            # in this case node has both children
+            temp_node = self._get_node_with_min_value(node.right_child)
+            node.value = temp_node.value
+            node.right_child = self._delete_node(node.right_child, temp_node.value)
+        return node
 
     def print_horizontally(self, left, level, node):
         if node:
