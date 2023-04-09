@@ -27,8 +27,8 @@ def measure_bst_operations_time():
 
         gc_old = gc.isenabled()
         gc.disable()
-#        input_list = random_list_generator()[:n]
-        input_list = ascending_order_list_generator()
+        input_list = random_list_generator()[:n]
+#        input_list = ascending_order_list_generator()
         bst_tree = BinarySearchTree()
         start_creation_time = time.process_time()
         for digit in input_list:
@@ -65,8 +65,8 @@ def measure_avl_operations_time():
 
         gc_old = gc.isenabled()
         gc.disable()
-#        input_list = random_list_generator()[:n]
-        input_list = ascending_order_list_generator()
+        input_list = random_list_generator()[:n]
+#        input_list = ascending_order_list_generator()
         avl_tree = AVLTree()
         start_creation_time = time.process_time()
         for digit in input_list:
@@ -76,7 +76,7 @@ def measure_avl_operations_time():
 
         start_finding_time = time.process_time()
         for digit in input_list:
-            avl_tree.find_rec(None, avl_tree.root, digit)
+            avl_tree.find_ite(digit)
         finish_finding_time = time.process_time()
         avl_finding_times[n] = finish_finding_time - start_finding_time
 
@@ -99,14 +99,14 @@ def plot_creation(title, operation):
         measure_bst_operations_time()[operation].keys(),
         measure_bst_operations_time()[operation].values(),
         '-',
-        label=f'bst {operation} plots',
+        label=f'bst {operation} plot',
         markersize=3
         )
     plt.plot(
         measure_avl_operations_time()[operation].keys(),
         measure_avl_operations_time()[operation].values(),
         '-',
-        label=f'avl {operation} plots',
+        label=f'avl {operation} plot',
         markersize=3
         )
     plt.legend()
@@ -117,4 +117,4 @@ def plot_creation(title, operation):
     figure.savefig(title, format='png')
 
 
-plot_creation('creation_time.png', 'creation')
+plot_creation('Plots/finding_time.png', 'finding')
