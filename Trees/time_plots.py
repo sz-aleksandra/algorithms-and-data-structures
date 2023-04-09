@@ -27,8 +27,8 @@ def measure_bst_operations_time():
 
         gc_old = gc.isenabled()
         gc.disable()
-        input_list = random_list_generator()[:n]
-#        input_list = ascending_order_list_generator()
+#        input_list = random_list_generator()[:n]
+        input_list = ascending_order_list_generator()[:n]
         bst_tree = BinarySearchTree()
         start_creation_time = time.process_time()
         for digit in input_list:
@@ -65,8 +65,8 @@ def measure_avl_operations_time():
 
         gc_old = gc.isenabled()
         gc.disable()
-        input_list = random_list_generator()[:n]
-#        input_list = ascending_order_list_generator()
+#        input_list = random_list_generator()[:n]
+        input_list = ascending_order_list_generator()[:n]
         avl_tree = AVLTree()
         start_creation_time = time.process_time()
         for digit in input_list:
@@ -117,4 +117,4 @@ def plot_creation(title, operation):
     figure.savefig(title, format='png')
 
 
-plot_creation('Plots/finding_time.png', 'finding')
+plot_creation('Plots/sorted_deletion_time.png', 'deletion')

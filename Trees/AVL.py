@@ -34,43 +34,21 @@ class AVLTree(BinarySearchTree):
         self.root = self._delete_node(self.root, node_value)
 
     def _delete_node(self, node, node_value):
-        if not node:
-            return node
-        elif node_value < node.value:
-            node.left_child = self._delete_node(node.left_child, node_value)
-        elif node_value > node.value:
-            node.right_child = self._delete_node(node.right_child, node_value)
-        else:
-            # in this case node has one child or none
-            if not node.left_child:
-                temp_node = node.right_child
-                node = None
-                return temp_node
-            elif not node.right_child:
-                temp_node = node.left_child
-                node = None
-                return temp_node
-            # in this case node has both children
-            temp_node = self._get_node_with_min_value(node.right_child)
-            node.value = temp_node.value
-            node.right_child = self._delete_node(node.right_child, temp_node.value)
+        inh_node = super()._delete_node(node, node_value)
+        balance = self._get_balance(inh_node)
 
-        node.height = 1 + max(self._get_height(node.left_child), self._get_height(node.right_child))
+        if balance > 1 and self._get_balance(inh_node.left_child) >= 0:
+            return self._rotate_right(inh_node)
+        elif balance > 1 and self._get_balance(inh_node.left_child) < 0:
+            inh_node.left_child = self._rotate_left(inh_node.left_child)
+            return self._rotate_right(inh_node)
+        if balance < -1 and self._get_balance(inh_node.right_child) <= 0:
+            return self._rotate_left(inh_node)
+        elif balance < -1 and self._get_balance(inh_node.right_child) > 0:
+            inh_node.right_child = self._rotate_right(inh_node.right_child)
+            return self._rotate_left(inh_node)
 
-        balance = self._get_balance(node)
-
-        if balance > 1 and self._get_balance(node.left_child) >= 0:
-            return self._rotate_right(node)
-        elif balance > 1 and self._get_balance(node.left_child) < 0:
-            node.left_child = self._rotate_left(node.left_child)
-            return self._rotate_right(node)
-        if balance < -1 and self._get_balance(node.right_child) <= 0:
-            return self._rotate_left(node)
-        elif balance < -1 and self._get_balance(node.right_child) > 0:
-            node.right_child = self._rotate_right(node.right_child)
-            return self._rotate_left(node)
-
-        return node
+        return inh_node
 
     def _get_balance(self, node):
         if not node:
@@ -108,12 +86,3 @@ class AVLTree(BinarySearchTree):
         left_node.height = 1 + max(self._get_height(left_node.left_child), self._get_height(left_node.right_child))
 
         return left_node
-
-
-digits = [digit for digit in range(1, 10000)]
-Avltree = AVLTree()
-
-for digit in digits:
-    Avltree.insert_node(digit)
-
-Avltree.print_horizontally(0, 0, Avltree.root)
