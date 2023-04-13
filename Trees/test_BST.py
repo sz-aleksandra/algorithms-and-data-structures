@@ -1,4 +1,4 @@
-from ..BST import Node, BinarySearchTree
+from BST import Node, BinarySearchTree
 
 # _delete_node is not tested but its a part of delete_node test
 # print_horizontally is not tested automaticly, but manually
