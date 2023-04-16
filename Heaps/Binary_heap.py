@@ -22,7 +22,7 @@ class Binary_Heap:
 
     def pop_root(self):
         pos = 0
-        while pos < self.current_position / 2:
+        while pos < (self.current_position - 2) / 2:
             if self.heap_as_list[2 * pos + 2] >= self.heap_as_list[2 * pos + 1]:
                 self.heap_as_list[pos] = self.heap_as_list[2 * pos + 2]
                 pos = 2 * pos + 2
@@ -33,6 +33,7 @@ class Binary_Heap:
             self.heap_as_list[pos] = self.heap_as_list[pos + 1]
             pos += 1
         self.heap_as_list.pop()
+        self.current_position -= 1
 
     def print_heap(self):
         # max height 4
@@ -71,4 +72,6 @@ bh.push(3)
 bh.push(6)
 bh.push(2)
 bh.push(4)
+bh.print_heap()
+bh.pop_root()
 bh.print_heap()

@@ -23,12 +23,12 @@ class Quaternion_Heap:
     def pop_root(self):
         pos = 0
         while pos < (self.current_position - 3) / 4:
-            if self.heap_as_list[4 * pos + 2] >= self.heap_as_list[4 * pos + 1] and self.heap_as_list[4 * pos + 2] >= self.heap_as_list[4 * pos + 3] and self.heap_as_list[4 * pos + 2] >= self.heap_as_list[4 * pos + 4]:
-                self.heap_as_list[pos] = self.heap_as_list[4 * pos + 2]
-                pos = 4 * pos + 2
-            elif self.heap_as_list[4 * pos + 1] >= self.heap_as_list[4 * pos + 2] and self.heap_as_list[4 * pos + 1] >= self.heap_as_list[4 * pos + 3] and self.heap_as_list[4 * pos + 1] >= self.heap_as_list[4 * pos + 4]:
+            if self.heap_as_list[4 * pos + 1] >= self.heap_as_list[4 * pos + 2] and self.heap_as_list[4 * pos + 1] >= self.heap_as_list[4 * pos + 3] and self.heap_as_list[4 * pos + 1] >= self.heap_as_list[4 * pos + 4]:
                 self.heap_as_list[pos] = self.heap_as_list[4 * pos + 1]
                 pos = 4 * pos + 1
+            elif self.heap_as_list[4 * pos + 2] >= self.heap_as_list[4 * pos + 1] and self.heap_as_list[4 * pos + 2] >= self.heap_as_list[4 * pos + 3] and self.heap_as_list[4 * pos + 2] >= self.heap_as_list[4 * pos + 4]:
+                self.heap_as_list[pos] = self.heap_as_list[4 * pos + 2]
+                pos = 4 * pos + 2
             elif self.heap_as_list[4 * pos + 3] >= self.heap_as_list[4 * pos + 2] and self.heap_as_list[4 * pos + 3] >= self.heap_as_list[4 * pos + 1] and self.heap_as_list[4 * pos + 3] >= self.heap_as_list[4 * pos + 4]:
                 self.heap_as_list[pos] = self.heap_as_list[4 * pos + 3]
                 pos = 4 * pos + 3
@@ -39,6 +39,7 @@ class Quaternion_Heap:
             self.heap_as_list[pos] = self.heap_as_list[pos + 1]
             pos += 1
         self.heap_as_list.pop()
+        self.current_position -= 1
 
     def print_heap(self):
         pass
