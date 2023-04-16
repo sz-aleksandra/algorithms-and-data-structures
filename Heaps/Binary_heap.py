@@ -35,6 +35,7 @@ class Binary_Heap:
         self.heap_as_list.pop()
 
     def print_heap(self):
+        # max height 4
         elements = self.current_position
         levels = 0
         while elements > 1:
