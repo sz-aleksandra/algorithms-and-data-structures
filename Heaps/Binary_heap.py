@@ -20,16 +20,20 @@ class Binary_Heap:
         self.heap_as_list[position_1] = self.heap_as_list[position_2]
         self.heap_as_list[position_2] = temp
 
-    def pop(self):
-        pass
+    def pop_root(self):
+        pos = 0
+        while pos < self.current_position / 2:
+            if self.heap_as_list[2 * pos + 2] >= self.heap_as_list[2 * pos + 1]:
+                self.heap_as_list[pos] = self.heap_as_list[2 * pos + 2]
+                pos = 2 * pos + 2
+            else:
+                self.heap_as_list[pos] = self.heap_as_list[2 * pos + 1]
+                pos = 2 * pos + 1
+#        pos += 1
+        while pos < self.current_position:
+            self.heap_as_list[pos] = self.heap_as_list[pos + 1]
+            pos += 1
+        self.heap_as_list.pop()
 
     def print_heap(self):
         pass
-
-
-bh = Binary_Heap()
-bh.push(8)
-bh.push(7)
-bh.push(6)
-bh.push(9)
-bh.push(4)
