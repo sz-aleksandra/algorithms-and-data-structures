@@ -29,7 +29,6 @@ class Binary_Heap:
             else:
                 self.heap_as_list[pos] = self.heap_as_list[2 * pos + 1]
                 pos = 2 * pos + 1
-#        pos += 1
         while pos < self.current_position:
             self.heap_as_list[pos] = self.heap_as_list[pos + 1]
             pos += 1
