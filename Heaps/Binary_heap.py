@@ -35,4 +35,39 @@ class Binary_Heap:
         self.heap_as_list.pop()
 
     def print_heap(self):
-        pass
+        elements = self.current_position
+        levels = 0
+        while elements > 1:
+            elements = elements / 2
+            levels += 1
+        pos = 0
+        row = 0
+        while levels > 0:
+            line = '\t' * (2 ** (levels - 1))
+            pos_in_line = 0
+            while pos_in_line < 2 ** row and pos + pos_in_line <= self.current_position:
+                line += f'{self.heap_as_list[pos + pos_in_line]}'
+                line += '\t' * (2 ** (levels))
+                pos_in_line += 1
+            print(line)
+            pos += pos_in_line
+            row += 1
+            levels -= 1
+
+
+bh = Binary_Heap()
+bh.push(8)
+bh.push(7)
+bh.push(6)
+bh.push(6)
+bh.push(4)
+bh.push(6)
+bh.push(5)
+bh.push(2)
+bh.push(1)
+bh.push(4)
+bh.push(3)
+bh.push(6)
+bh.push(2)
+bh.push(4)
+bh.print_heap()
