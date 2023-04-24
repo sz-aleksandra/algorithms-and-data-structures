@@ -1,5 +1,6 @@
-class Binary_Heap:
-    def __init__(self):
+class Nnary_Heap:
+    def __init__(self, n):
+        self.nnarity = n
         self.heap_as_list = []
         self.current_position = None
 
@@ -11,9 +12,9 @@ class Binary_Heap:
             self.heap_as_list.append(value)
             self.current_position += 1
             pos = self.current_position
-            while pos > 0 and self.heap_as_list[pos] > self.heap_as_list[int((pos - 1) / 2)]:
-                self.change_elements(pos, int((pos - 1) / 2))
-                pos = int((pos - 1) / 2)
+            while pos > 0 and self.heap_as_list[pos] > self.heap_as_list[int((pos - 1) / self.nnarity)]:
+                self.change_elements(pos, int((pos - 1) / self.nnarity))
+                pos = int((pos - 1) / self.nnarity)
 
     def change_elements(self, position_1, position_2):
         temp = self.heap_as_list[position_1]
@@ -21,21 +22,27 @@ class Binary_Heap:
         self.heap_as_list[position_2] = temp
 
     def pop_root(self):
-        pos = 0
-        while pos < (self.current_position - 2) / 2:
-            if self.heap_as_list[2 * pos + 2] >= self.heap_as_list[2 * pos + 1]:
-                self.heap_as_list[pos] = self.heap_as_list[2 * pos + 2]
-                pos = 2 * pos + 2
-            else:
-                self.heap_as_list[pos] = self.heap_as_list[2 * pos + 1]
-                pos = 2 * pos + 1
-        while pos < self.current_position:
-            self.heap_as_list[pos] = self.heap_as_list[pos + 1]
-            pos += 1
-        self.heap_as_list.pop()
+        self.heap_as_list[0] = self.heap_as_list[self.current_position]
+        self.heap_as_list.pop(self.current_position)
         self.current_position -= 1
+        pos = 0
+        i = self.find_max_child(pos)
+        while i:
+            self.change_elements(pos, self.nnarity * pos + i)
+            pos = self.nnarity * pos + i
+            i = self.find_max_child(pos)
 
-    def print_heap(self):
+    def find_max_child(self, pos):
+        current_max = self.heap_as_list[pos]
+        current_max_index = None
+        for i in range(1, self.nnarity):
+            if self.nnarity * pos + i < self.current_position:
+                if self.heap_as_list[self.nnarity * pos + i] > current_max:
+                    current_max = self.heap_as_list[self.nnarity * pos + i]
+                    current_max_index = i
+        return current_max_index
+
+    def print_binary_heap(self):
         # max height 4
         elements = self.current_position
         levels = 0
@@ -57,7 +64,7 @@ class Binary_Heap:
             levels -= 1
 
 
-bh = Binary_Heap()
+bh = Nnary_Heap(4)
 bh.push(8)
 bh.push(7)
 bh.push(6)
@@ -72,6 +79,4 @@ bh.push(3)
 bh.push(6)
 bh.push(2)
 bh.push(4)
-bh.print_heap()
 bh.pop_root()
-bh.print_heap()
