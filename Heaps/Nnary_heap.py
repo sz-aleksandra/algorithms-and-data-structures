@@ -63,8 +63,17 @@ class Nnary_Heap:
             row += 1
             levels -= 1
 
+    def print_uni(self, position=0, level=0):
+# prints root at the top and its children below (top is the most left one)
+# same intendation equals same depth
+        if position <= self.current_position:
+            print(' ' * level, self.heap_as_list[position])
+            for i in range(1, self.nnarity + 1):
+                self.print_uni(self.nnarity * position + i, level + 1)
 
-bh = Nnary_Heap(4)
+
+
+bh = Nnary_Heap(3)
 bh.push(8)
 bh.push(7)
 bh.push(6)
@@ -79,4 +88,7 @@ bh.push(3)
 bh.push(6)
 bh.push(2)
 bh.push(4)
+bh.print_uni()
 bh.pop_root()
+print('\n')
+bh.print_uni()
