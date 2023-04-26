@@ -36,7 +36,7 @@ class Nnary_Heap:
         current_max = self.heap_as_list[pos]
         current_max_index = None
         for i in range(1, self.arity + 1):
-            if self.arity * pos + i < self.current_position:
+            if self.arity * pos + i <= self.current_position:
                 if self.heap_as_list[self.arity * pos + i] > current_max:
                     current_max = self.heap_as_list[self.arity * pos + i]
                     current_max_index = i
@@ -70,25 +70,3 @@ class Nnary_Heap:
             print('   ' * level, self.heap_as_list[position])
             for i in range(1, self.arity + 1):
                 self.print_uni(self.arity * position + i, level + 1)
-
-
-
-bh = Nnary_Heap(4)
-bh.push(8)
-bh.push(7)
-bh.push(6)
-bh.push(6)
-bh.push(4)
-bh.push(6)
-bh.push(5)
-bh.push(2)
-bh.push(9)
-bh.push(4)
-bh.push(3)
-bh.push(6)
-bh.push(2)
-bh.push(4)
-bh.print_uni()
-bh.pop_root()
-print('\n')
-bh.print_uni()
