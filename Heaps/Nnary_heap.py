@@ -22,15 +22,19 @@ class Nnary_Heap:
         self.heap_as_list[position_2] = temp
 
     def pop_root(self):
-        self.heap_as_list[0] = self.heap_as_list[self.current_position]
-        self.heap_as_list.pop(self.current_position)
-        self.current_position -= 1
-        pos = 0
-        i = self.find_max_child(pos)
-        while i:
-            self.change_elements(pos, self.arity * pos + i)
-            pos = self.arity * pos + i
-            i = self.find_max_child(pos)
+        if self.heap_as_list:
+            self.heap_as_list[0] = self.heap_as_list[self.current_position]
+            self.heap_as_list.pop(self.current_position)
+            if self.current_position != 0:
+                self.current_position -= 1
+                pos = 0
+                i = self.find_max_child(pos)
+                while i:
+                    self.change_elements(pos, self.arity * pos + i)
+                    pos = self.arity * pos + i
+                    i = self.find_max_child(pos)
+            else:
+                self.current_position = None
 
     def find_max_child(self, pos):
         current_max = self.heap_as_list[pos]
@@ -42,53 +46,11 @@ class Nnary_Heap:
                     current_max_index = i
         return current_max_index
 
-    def print_binary_heap(self):
-        # max height 4
-        elements = self.current_position
-        levels = 0
-        while elements > 1:
-            elements = elements / 2
-            levels += 1
-        pos = 0
-        row = 0
-        while levels > 0:
-            line = '\t' * (2 ** (levels - 1))
-            pos_in_line = 0
-            while pos_in_line < 2 ** row and pos + pos_in_line <= self.current_position:
-                line += f'{self.heap_as_list[pos + pos_in_line]}'
-                line += '\t' * (2 ** (levels))
-                pos_in_line += 1
-            print(line)
-            pos += pos_in_line
-            row += 1
-            levels -= 1
-
     def print_uni(self, position=0, level=0):
 # prints root at the top and its children below (top is the most left one)
 # same intendation equals same depth
-        if position <= self.current_position:
-            print('   ' * level, self.heap_as_list[position])
-            for i in range(1, self.arity + 1):
-                self.print_uni(self.arity * position + i, level + 1)
-
-
-
-bh = Nnary_Heap(4)
-bh.push(8)
-bh.push(7)
-bh.push(6)
-bh.push(6)
-bh.push(4)
-bh.push(6)
-bh.push(5)
-bh.push(2)
-bh.push(9)
-bh.push(4)
-bh.push(3)
-bh.push(6)
-bh.push(2)
-bh.push(4)
-bh.print_uni()
-bh.pop_root()
-print('\n')
-bh.print_uni()
+        if self.heap_as_list:
+            if position <= self.current_position:
+                print('   ' * level, self.heap_as_list[position])
+                for i in range(1, self.arity + 1):
+                    self.print_uni(self.arity * position + i, level + 1)
