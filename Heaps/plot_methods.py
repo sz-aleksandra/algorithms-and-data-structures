@@ -31,7 +31,7 @@ def measure_heap_operations_time(heap, input_list, n_values):
 
 
 def plot_results(n_values, creation_times, removal_times, heap_names):
-
+    plt.figure(figsize=(12, 6))
     for i, heap_name in enumerate(heap_names):
         plt.plot(n_values, creation_times[i], label=heap_name)
     plt.xlabel("Liczba elementów")
