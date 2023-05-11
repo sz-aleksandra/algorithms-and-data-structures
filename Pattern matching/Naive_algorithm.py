@@ -71,4 +71,3 @@ def find_KR(string, text):
 #xample_string = 'motyw'
 #print(find_N(example_string, example_text))
 #print(find_KMP(example_string, example_text))
-
