@@ -63,6 +63,10 @@ def find_KMP(string, text):
         pos_in_text += max(1, pos_in_string - KMP_table[pos_in_string])
     return position_list
 
+
+def find_KR(string, text):
+    pass
+
 #example_text = 'lokomotywmotywa'
 #xample_string = 'motyw'
 #print(find_N(example_string, example_text))
