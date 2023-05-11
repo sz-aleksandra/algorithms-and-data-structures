@@ -40,7 +40,7 @@ def find_KR(string, text):
     rolling_hash = RollingHash(text, len(string))
 
     for index in range(len(text) - len(string) + 1):
-        if rolling_hash == pattern_hash:
+        if rolling_hash.hash == pattern_hash:
             if rolling_hash.current_text() == string:
                 position_list.append(index)
         if index < len(text) - len(string):
