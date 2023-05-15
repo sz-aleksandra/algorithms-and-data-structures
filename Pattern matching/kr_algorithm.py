@@ -1,18 +1,17 @@
 
 class RollingHash:
-    def __init__(self, text, size, prime=101, modulo=2**64):
+    def __init__(self, text, size):
         self.text = text
         self.size = size
-        self.prime = prime
-        self.modulo = modulo
         self.start = 0
         self.end = size
-        self.hash = string_hash(self.text[:self.size], self.prime, self.modulo)
+        self.hash = string_hash(self.text[:self.size])
 
     def move_hash(self):
         if self.end <= len(self.text) - 1:
-            self.hash = (self.hash - ord(self.text[self.start]) * pow(self.prime, self.size - 1, self.modulo)) % self.modulo
-            self.hash = (self.hash * self.prime + ord(self.text[self.end])) % self.modulo
+            self.hash -= (ord(self.text[self.start]) - ord('a') + 1) * (26 ** (self.size - 1))
+            self.hash *= 26
+            self.hash += (ord(self.text[self.end]) - ord('a') + 1)
             self.start += 1
             self.end += 1
 
@@ -20,10 +19,10 @@ class RollingHash:
         return self.text[self.start:self.end]
 
 
-def string_hash(string, prime, modulo):
+def string_hash(string):
     hash_value = 0
-    for character in string:
-        hash_value = (hash_value * prime + ord(character)) % modulo
+    for index in range(0, len(string)):
+        hash_value += (ord(string[index]) - ord('a') + 1) * (26 ** (len(string) - index - 1))
     return hash_value
 
 
@@ -36,7 +35,7 @@ def find_KR(string, text):
     if len(string) == len(text) and string != text:
         return position_list
 
-    pattern_hash = string_hash(string, 101, 2**64)
+    pattern_hash = string_hash(string)
     rolling_hash = RollingHash(text, len(string))
 
     for index in range(len(text) - len(string) + 1):
