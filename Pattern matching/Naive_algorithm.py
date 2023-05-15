@@ -32,7 +32,10 @@ def find_N(string, text):
             pos_in_string += 1
         if pos_in_string == len(string):
             position_list.append(pos_in_text)
-            pos_in_text += len(string)
+            if len(string) != 0:
+                pos_in_text += len(string)
+            else:
+                pos_in_text += 1
         else:
             pos_in_text += 1
     return position_list
@@ -63,7 +66,10 @@ def find_KMP(string, text):
         pos_in_text += max(1, pos_in_string - KMP_table[pos_in_string])
     return position_list
 
-#example_text = 'lokomotywmotywa'
-#xample_string = 'motyw'
-#print(find_N(example_string, example_text))
-#print(find_KMP(example_string, example_text))
+#correct = True
+#example_text = get_text('../Sorts/pan-tadeusz-unix.txt')
+#example_string_list = get_list_of_words(example_text)[:100]
+#for example_string in example_string_list:
+#    if find_N(example_string, example_text) != find_KMP(example_string, example_text):
+#        correct = False
+#print(correct)
