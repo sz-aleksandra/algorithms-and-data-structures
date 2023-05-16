@@ -5,7 +5,7 @@ from Naive_algorithm import find_KMP, find_N
 
 
 def test_string_matching_algorithms():
-    ALPHABET = string.ascii_letters[:2]  # Limit alphabet to two letters
+    LETTERS = [random.choice(string.ascii_letters), random.choice(string.ascii_letters)]
     NUMBER_OF_TESTS = 10
     MAX_TEXT_LENGTH = 100
     MAX_PATTERN_LENGTH = 10
@@ -14,8 +14,8 @@ def test_string_matching_algorithms():
         text_length = random.randint(1, MAX_TEXT_LENGTH)
         pattern_length = random.randint(1, min(text_length, MAX_PATTERN_LENGTH))
 
-        text = ''.join(random.choices(ALPHABET, k=text_length))
-        pattern = ''.join(random.choices(ALPHABET, k=pattern_length))
+        text = ''.join(random.choices(LETTERS, k=text_length))
+        pattern = ''.join(random.choices(LETTERS, k=pattern_length))
 
         kr_result = find_KR(pattern, text)
         kmp_result = find_KMP(pattern, text)
