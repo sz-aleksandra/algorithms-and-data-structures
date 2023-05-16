@@ -25,6 +25,12 @@ def get_list_of_words(text):
 
 def find_N(string, text):
     position_list = []
+    if not (string and text):
+        return position_list
+    if len(string) > len(text):
+        return position_list
+    if len(string) == len(text) and string != text:
+        return position_list
     pos_in_text = 0
     while pos_in_text <= len(text) - len(string):
         pos_in_string = 0
@@ -49,8 +55,16 @@ def create_KMP_table(string):
 
 
 def find_KMP(string, text):
-    KMP_table = create_KMP_table(string)
     position_list = []
+    if not (string and text):
+        return position_list
+    if len(string) > len(text):
+        return position_list
+    if len(string) == len(text) and string != text:
+        return position_list
+
+    KMP_table = create_KMP_table(string)
+
     pos_in_text = 0
     while pos_in_text <= len(text) - len(string):
         pos_in_string = KMP_table[0]
