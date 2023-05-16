@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
 from time import process_time
 import gc
-from Naive_algorithm import find_N, find_KMP, get_text, get_list_of_words
+from Naive_algorithm import find_N
+from kmp_algorithm import find_KMP
 from kr_algorithm import find_KR
+from file_methods import get_list_of_words, get_text
 
 
 def measure_find_N_times(n_values, list_of_words, text):

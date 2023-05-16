@@ -1,7 +1,8 @@
 import random
 import string
 from kr_algorithm import find_KR
-from Naive_algorithm import find_KMP, find_N
+from kmp_algorithm import find_KMP
+from Naive_algorithm import find_N
 
 
 def test_string_matching_algorithms():

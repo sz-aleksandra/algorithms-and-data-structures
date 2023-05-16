@@ -1,4 +1,5 @@
-from Naive_algorithm import find_N, find_KMP
+from Naive_algorithm import find_N
+from kmp_algorithm import find_KMP
 from kr_algorithm import find_KR
 
 

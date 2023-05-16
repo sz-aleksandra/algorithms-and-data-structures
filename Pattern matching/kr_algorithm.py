@@ -1,4 +1,3 @@
-
 class RollingHash:
     def __init__(self, text, size):
         self.text = text
