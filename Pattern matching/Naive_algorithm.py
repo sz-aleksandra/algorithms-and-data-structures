@@ -32,12 +32,7 @@ def find_N(string, text):
             pos_in_string += 1
         if pos_in_string == len(string):
             position_list.append(pos_in_text)
-            if len(string) != 0:
-                pos_in_text += len(string)
-            else:
-                pos_in_text += 1
-        else:
-            pos_in_text += 1
+        pos_in_text += 1
     return position_list
 
 
