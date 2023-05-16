@@ -17,9 +17,6 @@ def test_string_matching_algorithms():
         text = ''.join(random.choices(ALPHABET, k=text_length))
         pattern = ''.join(random.choices(ALPHABET, k=pattern_length))
 
-        text = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
-        pattern = 'bbb'
-
         kr_result = find_KR(pattern, text)
         kmp_result = find_KMP(pattern, text)
         naive_result = find_N(pattern, text)
